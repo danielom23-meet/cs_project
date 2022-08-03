@@ -99,16 +99,20 @@ button:hover {
 	<title>Sign Up</title>
 </head>
 <body align = "center">
-    <div class="w3-top">
+<div class="w3-top">
   <div class="w3-bar w3-white w3-card" id="myNavbar">
-    <a href="#home" class="w3-bar-item w3-button w3-wide">LOUIS VOYAGE</a>
+    <a href="/" class="w3-bar-item w3-button w3-wide">LOUIS VOYAGE</a>
     <!-- Right-sided navbar links -->
     <div class="w3-right w3-hide-small">
       <a href="#about" class="w3-bar-item w3-button">ABOUT</a>
-      <a href="#team" class="w3-bar-item w3-button"><i class="fa fa-user"></i> STORE</a>
+      <a href="/store" class="w3-bar-item w3-button"><i class="fa fa-user"></i> STORE</a>
       <a href="#work" class="w3-bar-item w3-button"><i class="fa fa-th"></i> SHOES</a>
-      <a href="#pricing" class="w3-bar-item w3-button"><i class="fa fa-usd"></i> CART</a>
-      <a href="#contact" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> SIGNOUT</a>
+      <a href="/cart" class="w3-bar-item w3-button"><i class="fa fa-usd"></i> CART</a>
+      {% if not logged_out %}
+      <a href="/signout" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> SIGNOUT</a>
+      {% else %}
+      <a href="/signin" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> SIGNIN / UP</a>
+      {% endif %}
     </div>
     <!-- Hide right-floated links on small screens and replace them with a menu icon -->
 
@@ -117,7 +121,9 @@ button:hover {
     </a>
   </div>
 </div>
-
+<br>
+<br>
+<div>
 	<form method="post" action="/signup">
         <!-- Heading -->
         <h4>
@@ -164,5 +170,6 @@ button:hover {
     </form>
     <br>
     <a href="/"><button>signin</button></a>
+</div>
 </body>
 </html>

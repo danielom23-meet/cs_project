@@ -23,13 +23,14 @@ app = Flask(__name__, template_folder='templates', static_folder='static')
 app.config['SECRET_KEY'] = 'super-secret-key'
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/signin', methods=['GET', 'POST'])
 def signin():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
         try:
             login_session['user'] = auth.sign_in_with_email_and_password(email,password)
+            login_session['inside'] = True
             return redirect(url_for('home'))
         except:
             error = "Error with signing up"
@@ -46,26 +47,34 @@ def signup():
         try:
             login_session['user'] = auth.create_user_with_email_and_password(email,password)
             db.child("Users").child(login_session['user']['localId']).set(user)
+            login_session['inside'] = True
             return redirect(url_for('home'))
         except:
             error = "Error with signing up"
     return render_template("signup.html", error = error)
 
-@app.route('/signout')
-def signout():
-    login_session['user'] = None
-    auth.current_user = None
-    return redirect(url_for('signin'))
-
-
-@app.route('/home')
+@app.route('/', methods = ['GET', 'POST'])
 def home():
-    return render_template("testProject.html")
+    error = ""
+    logged_out = login_session['user'] is None
+    if request.method == 'POST':
+        name = request.form['Name']
+        email = request.form['Email']
+        subject = request.form['Subject']
+        message = request.form['Message']
+        feedback = {"name": name, "email_feedback": email, "subject": subject, "message": message}
+        try:
+            db.child("Users").child(login_session['user']['localId']).child("feedbacks").push(product)
+            return render_template("testProject.html")
+        except:
+            error = "There was an error"
+    return render_template("testProject.html", logged_out = logged_out)
 
 @app.route('/store', methods = ['GET', 'POST'])
 def store():
     error = ""
     if request.method == 'POST':
+
         product = {"quantity": 10, "price": 100}
         try:
             db.child("Users").child(login_session['user']['localId']).child("cart").push(product)
@@ -78,6 +87,11 @@ def store():
 def cart():
     return render_template("cart.html", cart = db.child("Users").child(login_session['user']['localId']).child("cart").get().val())
 
+@app.route('/signout')
+def signout():
+    login_session['user'] = None
+    auth.current_user = None
+    return redirect(url_for('home'))
 
 if __name__ == '__main__':
     app.run(debug=True)

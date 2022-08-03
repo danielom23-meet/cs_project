@@ -26,19 +26,52 @@ body, html {
 .w3-bar .w3-button {
   padding: 16px;
 }
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+}
+
+.price {
+  color: grey;
+  font-size: 22px;
+}
+
+.card button {
+  border: none;
+  outline: 0;
+  padding: 12px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
+
+.card button:hover {
+  opacity: 0.7;
+}
 </style>
 </head>
 <body>
-	<div class="w3-top">
+<div class="w3-top">
   <div class="w3-bar w3-white w3-card" id="myNavbar">
-    <a href="#home" class="w3-bar-item w3-button w3-wide">LOUIS VOYAGE</a>
+    <a href="/" class="w3-bar-item w3-button w3-wide">LOUIS VOYAGE</a>
     <!-- Right-sided navbar links -->
     <div class="w3-right w3-hide-small">
       <a href="#about" class="w3-bar-item w3-button">ABOUT</a>
-      <a href="#team" class="w3-bar-item w3-button"><i class="fa fa-user"></i> STORE</a>
+      <a href="/store" class="w3-bar-item w3-button"><i class="fa fa-user"></i> STORE</a>
       <a href="#work" class="w3-bar-item w3-button"><i class="fa fa-th"></i> SHOES</a>
-      <a href="#pricing" class="w3-bar-item w3-button"><i class="fa fa-usd"></i> CART</a>
-      <a href="#contact" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> SIGNOUT</a>
+      <a href="/cart" class="w3-bar-item w3-button"><i class="fa fa-usd"></i> CART</a>
+      {% if not logged_out %}
+      <a href="/signout" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> SIGNOUT</a>
+      {% else %}
+      <a href="/signin" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> SIGNIN / UP</a>
+      {% endif %}
     </div>
     <!-- Hide right-floated links on small screens and replace them with a menu icon -->
 
@@ -48,9 +81,51 @@ body, html {
   </div>
 </div>
 
+<header class="bgimg-1 w3-display-container w3-grayscale-min" id="home">
+  <div class="w3-display-left w3-text-white" style="padding:48px">
+    <span class="w3-jumbo w3-hide-small" class = "title" style = "margin-top: 100px">New Collection</span><br>
+    <span class="w3-jumbo w3-hide-small" class = "title">Of Suits</span><br>
+    <!--span class="w3-xxlarge w3-hide-large w3-hide-medium">Start something that matters</span><br>
+    <span class="w3-large">Stop wasting valuable time with projects that just isn't you.</span!-->
+    <p><a href="/store" class="w3-button w3-black">Start Shopping</a>
+
+    <a href="/cart" class="w3-button w3-black"> Go to Your Cart</a></p>
+
+  </div> 
+  <!--div class="w3-display-bottomleft w3-text-grey w3-large" style="padding:24px 48px">
+    <i class="fa fa-facebook-official w3-hover-opacity"></i>
+    <i class="fa fa-instagram w3-hover-opacity"></i>
+    <i class="fa fa-snapchat w3-hover-opacity"></i>
+    <i class="fa fa-pinterest-p w3-hover-opacity"></i>
+    <i class="fa fa-twitter w3-hover-opacity"></i>
+    <i class="fa fa-linkedin w3-hover-opacity"></i>
+  </div!-->
+</header>
+
+
+
+
+
+
+
+
+<br>
+<br>
+<div>
 	<form action = '/store' method = "POST">
 		<h1> Store </h1>
 		<input type = "submit" value = "Add To Cart">
+		<h2 style="text-align:center">Product Card</h2>
+
+<div class="card">
+  <img src="/w3images/jeans3.jpg" alt="Denim Jeans" style="width:100%">
+  <h1>Tailored Jeans</h1>
+  <p class="price">$19.99</p>
+  <p>Some text about the jeans. Super slim and comfy lorem ipsum lorem jeansum. Lorem jeamsun denim lorem jeansum.</p>
+  <p><button>Add to Cart</button></p>
+</div>
 	</form>
+</div>
+
 </body>
 </html>
