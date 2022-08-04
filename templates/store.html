@@ -19,7 +19,7 @@ body, html {
 .bgimg-1 {
   background-position: center;
   background-size: cover;
-  background-image: url("/w3images/mac.jpg");
+  background-image: url("static/suit_store7.jpg");
   min-height: 100%;
 }
 
@@ -30,9 +30,14 @@ body, html {
 .card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   max-width: 300px;
-  margin: auto;
   text-align: center;
+  margin: auto;
+  width: 50%;
+  padding: 10px;
   font-family: arial;
+  align-items: center;
+  float: left;
+  margin-right: 40px;
 }
 
 .price {
@@ -55,6 +60,26 @@ body, html {
 .card button:hover {
   opacity: 0.7;
 }
+
+#suit_holder {
+	display: inline-flex;
+	flex-direction: row;
+
+}
+.suit {
+	display: inline;
+}
+
+.float-container {
+
+    padding: 20px;
+}
+
+.float-child {
+    width: 50%;
+    float: left;
+    padding: 20px;
+}  
 </style>
 </head>
 <body>
@@ -65,7 +90,6 @@ body, html {
     <div class="w3-right w3-hide-small">
       <a href="#about" class="w3-bar-item w3-button">ABOUT</a>
       <a href="/store" class="w3-bar-item w3-button"><i class="fa fa-user"></i> STORE</a>
-      <a href="#work" class="w3-bar-item w3-button"><i class="fa fa-th"></i> SHOES</a>
       <a href="/cart" class="w3-bar-item w3-button"><i class="fa fa-usd"></i> CART</a>
       {% if not logged_out %}
       <a href="/signout" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> SIGNOUT</a>
@@ -73,7 +97,6 @@ body, html {
       <a href="/signin" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> SIGNIN / UP</a>
       {% endif %}
     </div>
-    
     <!-- Hide right-floated links on small screens and replace them with a menu icon -->
 
     <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium" onclick="w3_open()">
@@ -81,18 +104,17 @@ body, html {
     </a>
   </div>
 </div>
+<br>
+<br>
 
 <header class="bgimg-1 w3-display-container w3-grayscale-min" id="home">
   <div class="w3-display-left w3-text-white" style="padding:48px">
-    <span class="w3-jumbo w3-hide-small" class = "title" style = "margin-top: 100px">New Collection</span><br>
-    <span class="w3-jumbo w3-hide-small" class = "title">Of Suits</span><br>
+    <span class="w3-jumbo w3-hide-small" class = "title" style = "margin-top: 100px; color: black"><b>Huge SALE On All The</b></span><br>
+    <span class="w3-jumbo w3-hide-small" class = "title" style = "color: black"><b>Suits To Ever Exist</b></span><br>
     <!--span class="w3-xxlarge w3-hide-large w3-hide-medium">Start something that matters</span><br>
     <span class="w3-large">Stop wasting valuable time with projects that just isn't you.</span!-->
-    <p><a href="/store" class="w3-button w3-black">Start Shopping</a>
+    <p><a href="#about" class="w3-button w3-black" style = "font-size: 30px">Let's go</a>
 
-    <a href="/cart" class="w3-button w3-black"> Go to Your Cart</a></p>
-
-  </div> 
   <!--div class="w3-display-bottomleft w3-text-grey w3-large" style="padding:24px 48px">
     <i class="fa fa-facebook-official w3-hover-opacity"></i>
     <i class="fa fa-instagram w3-hover-opacity"></i>
@@ -102,31 +124,49 @@ body, html {
     <i class="fa fa-linkedin w3-hover-opacity"></i>
   </div!-->
 </header>
-
-
-
-
-
-
-
-
 <br>
 <br>
-<div>
-	<form action = '/store' method = "POST">
-		<h1> Store </h1>
-		<input type = "submit" value = "Add To Cart">
+<div class="w3-container" id="about">
+	
+		<h1 style = "font-size: 40px"> Hello {{user['full_name']}} ! </h1>
 		<h2 style="text-align:center">Product Card</h2>
 
-<div class="card">
-  <img src="/w3images/jeans3.jpg" alt="Denim Jeans" style="width:100%">
-  <h1>Tailored Jeans</h1>
-  <p class="price">$19.99</p>
-  <p>Some text about the jeans. Super slim and comfy lorem ipsum lorem jeansum. Lorem jeamsun denim lorem jeansum.</p>
+
+<table id='suit_holder'>
+	<tr>
+		<div align = "center">
+		search suit: <input type = "text" name = "suit">
+		<input type = "submit">
+	</div>
+	<br>
+<div class = "move" align='center'>
+{% for suit in all_suits %}
+<form action = '/store' method = "POST">
+<div class="card float-container float-child">
+<div class="suit">
+  <img src="{{all_suits[suit]['img']}}" alt="Denim Jeans" style="width:100%">
+  <h1>{{all_suits[suit]['title']}} </h1>
+  <!--p class="price">{{all_suits[suit]['price']}}</p!-->
+  <p>{{all_suits[suit]['description']}} </p>
+  <input type="hidden" name="img" value="{{all_suits[suit]['img']}} ">
+  <input type="hidden" name="title" value="{{all_suits[suit]['title']}} ">
+  <input type="hidden" name="price" value="{{all_suits[suit]['price']}} ">
+  <input type="hidden" name="description" value="{{all_suits[suit]['description']}} ">
   <p><button>Add to Cart</button></p>
 </div>
-	</form>
 </div>
+	</form>
+{% endfor %}
+</tr>
+<tr>
+	<div>
+
+
+</tr>
+</table>
+</div>
+</div>
+
 
 </body>
 </html>

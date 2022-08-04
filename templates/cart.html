@@ -89,8 +89,8 @@ body{
 	width: 24%;
 }
 .title{
-	padding-top: 10px;
-	line-height: 10px;
+	/*padding-top: 10px;
+	line-height: 10px;*/
 	font-size: 32px;
 	font-family: 'Open Sans';
 	font-weight: 800;
@@ -221,7 +221,6 @@ hr{
     <div class="w3-right w3-hide-small">
       <a href="#about" class="w3-bar-item w3-button">ABOUT</a>
       <a href="/store" class="w3-bar-item w3-button"><i class="fa fa-user"></i> STORE</a>
-      <a href="#work" class="w3-bar-item w3-button"><i class="fa fa-th"></i> SHOES</a>
       <a href="/cart" class="w3-bar-item w3-button"><i class="fa fa-usd"></i> CART</a>
       {% if not logged_out %}
       <a href="/signout" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> SIGNOUT</a>
@@ -247,26 +246,30 @@ hr{
    	   	<h3 class="Heading">Shopping Cart</h3>
    	   	<h5 class="Action">Remove all</h5>
    	   </div>
+   	   {% if cart %}
    	   {% for item in cart %}
    	   <div class="Cart-Items">
    	   	  <div class="image-box">
-   	   	  	<img src="images/apple.png" style= "height: 120px" />
+   	   	  	<img src="{{cart[item]['img']}}" style= "height: 200px" />
    	   	  </div>
    	   	  <div class="about">
-   	   	  	<h1 class="title">Apple Juice</h1>
-   	   	  	<img src="images/veg.png" style= "height: 30px"/>
+   	   	  	<h1 class="title">{{cart[item]['title']}}</h1>
+   	   	  	<!--img src="images/veg.png" style= "height: 30px"/!-->
    	   	  </div>
    	   	  <div class="counter">
-   	   	  	<div class="btn">+</div>
-   	   	  	<div class="count">{{cart[item]['quantity']}}</div>
-   	   	  	<div class="btn">-</div>
+   	   	  	<!--div class="btn">+</div!-->
+   	   	  	<div class="count"> amount: {{cart[item]['amount']}}</div>
+   	   	  	<!--div class="btn">-</div!-->
    	   	  </div>
    	   	  <div class="prices">
    	   	  	<div class="amount">{{cart[item]['price']}} $</div>
-   	   	  	<div class="remove"><u>Remove</u></div>
+   	   	  	<!--div class="remove"><u>Remove</u></div!-->
    	   	  </div>
    	   </div>
    	   {% endfor %}
+   	   {% else %}
+   	   <h1> error </h1>
+   	   {% endif %}
    	   <!--div class="Cart-Items pad">
    	   	  <div class="image-box">
    	   	  	<img src="images/grapes.png" style= "height: 120px"/>
@@ -299,11 +302,9 @@ hr{
 	
 		<!--h1> Cart </h1>
 		<ul>
-		{% for item in cart %}
-		<li> Quantity: {{cart[item]['quantity']}}, Price: {{cart[item]['price']}} </li>
-		{% endfor %}
 	</ul!-->
 	
 </div>
+
 </body>
 </html>

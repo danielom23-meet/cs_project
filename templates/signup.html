@@ -8,7 +8,75 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
 body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box}
 
+/* Full-width input fields */
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* Set a style for all buttons */
+button {
+  background-color: #04AA6D;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+button:hover {
+  opacity:1;
+}
+
+/* Extra styles for the cancel button */
+.cancelbtn {
+  padding: 14px 20px;
+  background-color: #f44336;
+}
+
+/* Float cancel and signup buttons and add an equal width */
+.cancelbtn, .signupbtn {
+  float: left;
+  width: 50%;
+}
+
+/* Add padding to container elements */
+.container {
+  padding: 16px;
+}
+
+/* Clear floats */
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/* Change styles for cancel button and signup button on extra small screens */
+@media screen and (max-width: 300px) {
+  .cancelbtn, .signupbtn {
+     width: 100%;
+  }
+}
 body, html {
   height: 100%;
   line-height: 1.8;
@@ -93,6 +161,7 @@ button:hover {
      width: 100%;
   }
 }*/
+
 </style>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -106,7 +175,6 @@ button:hover {
     <div class="w3-right w3-hide-small">
       <a href="#about" class="w3-bar-item w3-button">ABOUT</a>
       <a href="/store" class="w3-bar-item w3-button"><i class="fa fa-user"></i> STORE</a>
-      <a href="#work" class="w3-bar-item w3-button"><i class="fa fa-th"></i> SHOES</a>
       <a href="/cart" class="w3-bar-item w3-button"><i class="fa fa-usd"></i> CART</a>
       {% if not logged_out %}
       <a href="/signout" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> SIGNOUT</a>
@@ -164,12 +232,12 @@ button:hover {
         </div>
         
         <!-- Button -->
-        <div>
-            <input type="submit"/>
+        <div class = "input-group">
+            <input type="submit" class = "input-group"/>
         </div>
     </form>
     <br>
-    <a href="/"><button>signin</button></a>
+    Already have an account? <a href="/signin">signin</a>
 </div>
 </body>
 </html>

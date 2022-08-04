@@ -30,7 +30,6 @@ def signin():
         password = request.form['password']
         try:
             login_session['user'] = auth.sign_in_with_email_and_password(email,password)
-            login_session['inside'] = True
             return redirect(url_for('home'))
         except:
             error = "Error with signing up"
@@ -53,6 +52,8 @@ def signup():
             error = "Error with signing up"
     return render_template("signup.html", error = error)
 
+
+
 @app.route('/', methods = ['GET', 'POST'])
 def home():
     error = ""
@@ -70,22 +71,41 @@ def home():
             error = "There was an error"
     return render_template("testProject.html", logged_out = logged_out)
 
+
+counter = 0
 @app.route('/store', methods = ['GET', 'POST'])
 def store():
     error = ""
     if request.method == 'POST':
-
-        product = {"quantity": 10, "price": 100}
+        product = {"quantity": 1, "price": 150}
+        img = request.form['img']
+        title = request.form['title']
+        price = request.form['price']
+        description = request.form['description']
+        suit = {"img": img, "title": title, "price": price, "description": description, "amount": counter}
         try:
-            db.child("Users").child(login_session['user']['localId']).child("cart").push(product)
+            #all_suits = {"suit1": {"img": "buy1.jpg", "title": "Slim-Fit Suit", "price": "150$", "description": "98% Virgin Wool 2% Lastane"}, "suit2": {"img": "buy2.jpg", "title": "Regular Classic Pocket", "price": "50$", "description": "Light Blue Black Wine Khaki Navy Blue Business Daily"}, "suit3": {"img": "buy3.jpg", "title": "Slim-Fit Suit Jacket", "price": "315$", "description": "True to size, choose your normal size"} }
+            #for item in db.child("Users").child(login_session['user']['localId']).child("cart").get().val():
+                #if item['title'] == suit['title']:
+            suit['amount'] = suit['amount'] + 1
+            #db.child("Users").child(login_session['user']['localId']).child("cart").update(suit)
+                #else:
+            db.child("Users").child(login_session['user']['localId']).child("cart").push(suit)
             return redirect(url_for('cart'))
         except:
             error = "adding failed"
-    return render_template("store.html")
+    return render_template("store.html", user = db.child("Users").child(login_session['user']['localId']).get().val(), all_suits = {"suit1": {"img": "static/buy1.jpg", "title": "Slim-Fit Suit", "price": 150, "description": "98% Virgin Wool 2% Lastane"}, "suit2": {"img": "static/buy2.jpg", "title": "Regular Classic Pocket", "price": 50, "description": "Light Blue Black Wine Khaki Navy Blue Business Daily"}, "suit3": {"img": "static/buy3.jpg", "title": "Slim-Fit Suit Jacket", "price": 315, "description": "True to size, choose your normal size"} })
+
+
 
 @app.route('/cart', methods = ['GET', 'POST'])
 def cart():
-    return render_template("cart.html", cart = db.child("Users").child(login_session['user']['localId']).child("cart").get().val())
+    all_suits = {"suit1": {"img": "buy1.jpg", "title": "Slim-Fit Suit", "price": 150, "description": "98% Virgin Wool 2% Lastane", "amount": 1},
+    "suit2": {"img": "buy2.jpg", "title": "Regular Classic Pocket", "price": 50, "description": "Light Blue Black Wine Khaki Navy Blue Business Daily", "amount": 0},
+    "suit3": {"img": "buy3.jpg", "title": "Slim-Fit Suit Jacket", "price": 315, "description": "True to size, choose your normal size", "amount": 0}}
+    print(db.child("Users").child(login_session['user']['localId']).child("cart").get().val())
+    return render_template("cart.html", all_suits = all_suits, suits = db.child("Suits").get().val(), cart = db.child("Users").child(login_session['user']['localId']).child("cart").get().val())
+
 
 @app.route('/signout')
 def signout():
